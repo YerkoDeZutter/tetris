@@ -59,9 +59,6 @@ function blockPicker(thisB){
   ]}
 }
 
-
-let tetBlock = [Ttetris, Ltetris];
-
 function DrawBlocks(tipe, place) {
 
   tipe.forEach((row, y) => {
@@ -77,7 +74,16 @@ function DrawBlocks(tipe, place) {
 
 
 
-DrawBlocks(Ttetris, {
-  x: 30,
-  y: 30
-})
+const CurBlock = {
+  position: {x: 30, y: 30},
+  block: null
+}
+
+function newBlock(){
+  CurBlock.block = blockPicker(Math.floor(Math.random() * 7));
+  // CurBlock.block = blockPicker(0);
+}
+
+newBlock()
+
+DrawBlocks(CurBlock.block, CurBlock.position)
