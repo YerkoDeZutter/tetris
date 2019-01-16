@@ -103,10 +103,10 @@ function update(frame = 0){
   }
 
 
-
+  console.log(CurBlock.position.y);
   //-----NEXT BLOCK-----
-  if(CurBlock.position.y == canvas.height){
-
+  if(CurBlock.position.y == 630){
+    newBlock()
   }
 
   // DrawBlocks(arena, {x: 0, y: 0})
