@@ -11,9 +11,10 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 function blockPicker(thisB){
   if(thisB == 0){
   return [
-    [1, 1, 1],
-    [0, 1, 0],
-    [0, 0, 0]
+    [0, 1, 0, 0],
+    [0, 1, 0, 0],
+    [0, 1, 0, 0],
+    [0, 1, 0, 0]
   ]}
 
   if(thisB == 1){
@@ -52,10 +53,9 @@ function blockPicker(thisB){
 
   if(thisB == 6){
   return [
-    [0, 1, 0, 0],
-    [0, 1, 0, 0],
-    [0, 1, 0, 0],
-    [0, 1, 0, 0]
+    [1, 1, 1],
+    [0, 1, 0],
+    [0, 0, 0]
   ]}
 }
 
