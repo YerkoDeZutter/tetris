@@ -1,7 +1,12 @@
 var canvas = document.querySelector("canvas");
 
-canvas.width = (30 * 12);
-canvas.height = (30 * 24);
+const blockAmountW = 12;
+const blockAmountH = 24;
+
+const blockSize = 30;
+
+canvas.width = (blockSize * blockAmountW);
+canvas.height = (blockSize * blockAmountH);
 
 var c = canvas.getContext("2d");
 
@@ -63,7 +68,8 @@ function blockPicker(thisB){
 
 
 // ----- DRAW CURRENT BLOCK -----
-
+let blockH = 0;
+let blockW = 0;
 function DrawBlocks(tipe, place) {
 
   c.fillStyle = "#000";
@@ -72,8 +78,10 @@ function DrawBlocks(tipe, place) {
   tipe.forEach((row, y) => {
     row.forEach((block, x) => {
       if (block != 0) {
+        blockH = y;
+        blockW = x;
         c.fillStyle = "#fff";
-        c.fillRect((x * 30) + place.x, (y * 30) + place.y, 30, 30);
+        c.fillRect((x * blockSize) + place.x, (y * blockSize) + place.y, blockSize, blockSize);
       }
     })
   })
@@ -98,14 +106,14 @@ function update(frame = 0){
   DropCountDown = DropCountDown + deltaFrame
 
   if(DropCountDown > DropTime){
-    CurBlock.position.y = CurBlock.position.y + 30;
+    CurBlock.position.y = CurBlock.position.y + blockSize;
     DropCountDown = 0
   }
 
 
-  console.log(CurBlock.position.y);
+
   //-----NEXT BLOCK-----
-  if(CurBlock.position.y == 630){
+  if(CurBlock.position.y >= ((blockSize * blockAmountH) - (blockH * blockSize))){
     newBlock()
   }
 
@@ -118,18 +126,45 @@ function update(frame = 0){
 
 
 
+function playerMove(offset) {
+  CurBlock.position.x += offset;
+}
+
+function playerDrop(){
+  CurBlock.position.y += blockSize;
+}
+
+
+
+document.addEventListener('keydown', event => {
+    if (event.keyCode === 37 && CurBlock.position.x >= blockSize) {
+        playerMove(-blockSize);
+    } else if (event.keyCode === 39 && CurBlock.position.x <= ((blockSize * blockAmountW) - (blockW * blockSize))) {
+        playerMove(blockSize);
+    } else if (event.keyCode === 40) {
+        playerDrop();
+
+    // } else if (event.keyCode === 81) {
+    //     playerRotate(-1);
+    // } else if (event.keyCode === 87) {
+    //     playerRotate(1);
+    }
+});
+
+
 
 
 
 //----- GET CURRENT BLOCK -----
 
 const CurBlock = {
-  position: {x: 30, y: 30},
+  position: {x: blockSize, y: blockSize},
   block: null
 }
 
 function newBlock(){
   CurBlock.block = blockPicker(Math.floor(Math.random() * 7));
+  CurBlock.position.y = blockSize;
   // CurBlock.block = blockPicker(0);
 }
 
